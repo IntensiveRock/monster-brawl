@@ -2,6 +2,13 @@ import pandas as pd
 import click
 from monster_brawl.card import MonsterCard, GearCard, SpellCard
 import os
+from pathlib import Path, PureWindowsPath, PurePosixPath
+import platform
+import logging
+
+_logger = logging.getLogger(__name__)
+
+# platform.system() >>> windows
 
 
 @click.command()
@@ -11,6 +18,8 @@ def load_from_xslx(filepth):
     gear_file = pd.read_excel(filepth, sheet_name="gear", header=0, index_col=None)
     spell_file = pd.read_excel(filepth, sheet_name="spells", header=0, index_col=None)
     os.mkdir("tmp")
+    card_dir = "tmp"
+    _logger.info("Starting monsters...")
     for index, row in monster_file.iterrows():
         try:
             tmp_monster = MonsterCard(
@@ -21,9 +30,13 @@ def load_from_xslx(filepth):
                 hp=row['HP'],
                 atk=row['ATK'],)
             img = tmp_monster.draw()
-            img.save(f"tmp/{tmp_monster.name}.png")
+            cpath = Path(card_dir, f"{tmp_monster.name}.png")
+            if platform.system() == "Windows":
+                cpath = PureWindowsPath(*cpath.parts)
+            img.save(cpath)
         except:
             pass
+    _logger.info("Starting gear...")
     for index, row in gear_file.iterrows():
         try:
             tmp_monster = GearCard(
@@ -33,18 +46,24 @@ def load_from_xslx(filepth):
                 rank=row['Gear Rank'],
                 cost=row['Cost'])
             img = tmp_monster.draw()
-            img.save(f"tmp/{tmp_monster.name}.png")
+            cpath = Path(card_dir, f"{tmp_monster.name}.png")
+            if platform.system() == "Windows":
+                cpath = PureWindowsPath(*cpath.parts)
+            img.save(cpath)
         except:
             pass
+    _logger.info("Starting spells...")
     for index, row in spell_file.iterrows():
-        print(row['Name'])
         try:
             tmp_monster = SpellCard(
                 name=row['Name'],
                 desc=row['Description'],
                 cost=row['Cost'])
             img = tmp_monster.draw()
-            img.save(f"tmp/{tmp_monster.name}.png")
+            cpath = Path(card_dir, f"{tmp_monster.name}.png")
+            if platform.system() == "Windows":
+                cpath = PureWindowsPath(*cpath.parts)
+            img.save(cpath)
         except:
             pass
     
