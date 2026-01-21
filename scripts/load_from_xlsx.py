@@ -17,8 +17,8 @@ def load_from_xslx(filepth):
     monster_file = pd.read_excel(filepth, sheet_name="monsters", header=0, index_col=None)
     gear_file = pd.read_excel(filepth, sheet_name="gear", header=0, index_col=None)
     spell_file = pd.read_excel(filepth, sheet_name="spells", header=0, index_col=None)
-    os.mkdir("tmp")
-    card_dir = "tmp"
+    card_dir = Path("tmp")
+    card_dir.mkdir(exist_ok=True)
     _logger.info("Starting monsters...")
     for index, row in monster_file.iterrows():
         try:
@@ -31,8 +31,6 @@ def load_from_xslx(filepth):
                 atk=row['ATK'],)
             img = tmp_monster.draw()
             cpath = Path(card_dir, f"{tmp_monster.name}.png")
-            if platform.system() == "Windows":
-                cpath = PureWindowsPath(*cpath.parts)
             img.save(cpath)
         except:
             pass
@@ -47,8 +45,6 @@ def load_from_xslx(filepth):
                 cost=row['Cost'])
             img = tmp_monster.draw()
             cpath = Path(card_dir, f"{tmp_monster.name}.png")
-            if platform.system() == "Windows":
-                cpath = PureWindowsPath(*cpath.parts)
             img.save(cpath)
         except:
             pass
@@ -61,8 +57,6 @@ def load_from_xslx(filepth):
                 cost=row['Cost'])
             img = tmp_monster.draw()
             cpath = Path(card_dir, f"{tmp_monster.name}.png")
-            if platform.system() == "Windows":
-                cpath = PureWindowsPath(*cpath.parts)
             img.save(cpath)
         except:
             pass
