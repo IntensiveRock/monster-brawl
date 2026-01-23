@@ -4,6 +4,8 @@ The Card Class.
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
+from monster_brawl.config import CARD_PATHS
+
 
 class Card():
     """
@@ -40,10 +42,10 @@ class MonsterCard(Card):
         """
         Draw the monster card.
         """
-        template = Image.open("/home/dewdrop/Projects/ccb/monster-brawl/templates/monster template backup no placeholder.png")
+        template = Image.open(CARD_PATHS["monster_template_path"])
         if self.pic != None:
             ...
-        font = ImageFont.truetype("/usr/share/fonts/TTF/NotoSerifNerdFont-Medium.ttf", size=25)
+        font = ImageFont.truetype(CARD_PATHS["font_path"], size=25)
         draw = ImageDraw.Draw(template)
         #Name
         draw.text((80, 550), self.name, font=font, fill='black')
@@ -84,10 +86,10 @@ class GearCard(Card):
         self.pic = pic
 
     def draw(self,):
-        template = Image.open("/home/dewdrop/Projects/ccb/monster-brawl/templates/gear template no placeholder.png")
+        template = Image.open(CARD_PATHS["gear_template_path"])
         if self.pic != None:
             ...
-        font = ImageFont.truetype("/usr/share/fonts/TTF/NotoSerifNerdFont-Medium.ttf", size=25)
+        font = ImageFont.truetype(CARD_PATHS["font_path"], size=25)
         draw = ImageDraw.Draw(template)
         #Name
         draw.text((80, 550), self.name, font=font, fill='black')
@@ -119,10 +121,10 @@ class SpellCard(Card):
         self.pic = pic
 
     def draw(self,):
-        template = Image.open("/home/dewdrop/Projects/ccb/monster-brawl/templates/spell template no placeholder.png")
+        template = Image.open(CARD_PATHS["spell_template_path"])
         if self.pic != None:
             ...
-        font = ImageFont.truetype("/usr/share/fonts/TTF/NotoSerifNerdFont-Medium.ttf", size=25)
+        font = ImageFont.truetype(CARD_PATHS["font_path"], size=25)
         draw = ImageDraw.Draw(template)
         draw.text((80, 550), self.name, font=font, fill='black')
         draw.multiline_text((80, 650), massage_desc(self.desc, 45), font=font, fill='black')
