@@ -21,11 +21,11 @@ def db_to_images(name, deckpath):
         try:
             tmp_monster = MonsterCard(
                 name=row[0],
-                desc=row[1],
-                mtype=row[2],
-                rank=row[3],
-                hp=row[4],
-                atk=row[5],)
+                desc=row[5],
+                mtype=row[1],
+                rank=row[2],
+                hp=row[3],
+                atk=row[4],)
             img = tmp_monster.draw()
             card_list.append(img)
         except:
@@ -34,10 +34,10 @@ def db_to_images(name, deckpath):
         try:
             tmp_monster = GearCard(
                 name=row[0],
-                desc=row[1],
-                gtype=row[2],
-                rank=row[3],
-                cost=row[4])
+                desc=row[4],
+                gtype=row[1],
+                rank=row[2],
+                cost=row[3])
             img = tmp_monster.draw()
             card_list.append(img)
         except:
@@ -46,8 +46,8 @@ def db_to_images(name, deckpath):
         try:
             tmp_monster = SpellCard(
                 name=row[0],
-                desc=row[1],
-                cost=row[2])
+                desc=row[2],
+                cost=row[1])
             img = tmp_monster.draw()
             card_list.append(img)
         except:

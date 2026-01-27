@@ -36,10 +36,18 @@ class SourceTable( Vertical ):
         # dt.fixed_columns = 1
         if self.popd:
             for i, col in enumerate(self.cols):
-                if i == 0:
+                if col == "name":
                     dt.add_column(col, width=20)
-                elif i ==1:
+                elif col == "desc":
                     dt.add_column(col, width=100)
+                elif col == "rank":
+                    dt.add_column(col, width=5)
+                elif col == "mtype":
+                    dt.add_column(col, width=6)
+                elif col == "hp" or col == "atk":
+                    dt.add_column(col, width=3)
+                elif col == "cost":
+                    dt.add_column(col, width=4)
                 else:
                     dt.add_column(col, width=10)
             dt.add_rows(self.cards)
@@ -80,10 +88,18 @@ class DeckTable( Vertical ):
         # dt.fixed_columns = 1
         if self.popd:
             for i, col in enumerate(self.cols):
-                if i == 0:
+                if col == "name":
                     dt.add_column(col, width=20)
-                elif i == 1:
+                elif col == "desc":
                     dt.add_column(col, width=100)
+                elif col == "rank":
+                    dt.add_column(col, width=5)
+                elif col == "mtype":
+                    dt.add_column(col, width=6)
+                elif col == "hp" or col == "atk":
+                    dt.add_column(col, width=3)
+                elif col == "cost":
+                    dt.add_column(col, width=4)
                 else:
                     dt.add_column(col, width=10)
         return dt
