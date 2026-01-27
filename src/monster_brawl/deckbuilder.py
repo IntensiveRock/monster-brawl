@@ -113,6 +113,9 @@ class DeckbuilderApp(App):
         self.pop_screen()
 
 
-if __name__ == "__main__":
+def main():
     app = DeckbuilderApp()
     app.run()
+    
+if __name__ == "__main__":
+    main()
