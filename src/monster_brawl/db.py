@@ -3,6 +3,7 @@ Database tools for cards and decks.
 """
 import sqlite3
 from pathlib import Path
+import random
 
 from monster_brawl.card import Card
 
@@ -39,7 +40,8 @@ def save_spell_db(card_list : list[Card], name : str, pth : Path):
     conn.close()
 
 def deckbuild_to_db(card_dict):
-    conn = sqlite3.connect("new_deck.db")
+    rand_num = "".join([str(random.randint(0,10)) for _ in range(5)])
+    conn = sqlite3.connect(f"new_deck_{rand_num}.db")
     cur = conn.cursor()
     cur.execute("CREATE TABLE monsters(name, desc, mtype, rank, hp int, atk int, pic)")
     for i, card in enumerate(card_dict["monsters"]):

@@ -13,11 +13,9 @@ from monster_brawl.card import MonsterCard, GearCard, SpellCard
 @click.option('-n', '--name', help="Name for the new deck")
 @click.argument('DECKPATH', type=click.Path(exists=True))
 def db_to_images(name, deckpath):
-    monsters, mcols = grab_cards_from_db(deckpath, "monsters")
-    gear, gcols = grab_cards_from_db(deckpath, "gear")
-    spells, scols = grab_cards_from_db(deckpath, "spells")
-    # card_dir = Path(name)
-    # card_dir.mkdir(exist_ok=True)
+    monsters, mcols = grab_cards_from_db(Path(deckpath), "monsters")
+    gear, gcols = grab_cards_from_db(Path(deckpath), "gear")
+    spells, scols = grab_cards_from_db(Path(deckpath), "spells")
     card_list = []
     for index, row in enumerate(monsters):
         try:
@@ -30,8 +28,6 @@ def db_to_images(name, deckpath):
                 atk=row[5],)
             img = tmp_monster.draw()
             card_list.append(img)
-            # cpath = Path(card_dir, f"m{index}.png")
-            # img.save(cpath)
         except:
             pass
     for index, row in enumerate(gear):
@@ -44,8 +40,6 @@ def db_to_images(name, deckpath):
                 cost=row[4])
             img = tmp_monster.draw()
             card_list.append(img)
-            # cpath = Path(card_dir, f"g{index}.png")
-            # img.save(cpath)
         except:
             pass
     for index, row in enumerate(spells):
@@ -56,11 +50,9 @@ def db_to_images(name, deckpath):
                 cost=row[2])
             img = tmp_monster.draw()
             card_list.append(img)
-            # cpath = Path(card_dir, f"s{index}.png")
-            # img.save(cpath)
         except:
             pass
-    deck_grid = image_grid(card_list, 10, 7)
+    deck_grid = image_grid(card_list, 7, 10)
     deck_grid.save(f"{name}.png")
 
 def image_grid(imgs, rows, cols):

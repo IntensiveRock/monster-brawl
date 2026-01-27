@@ -3,13 +3,23 @@ from rich.text import Text
 
 from textual import events
 from textual.app import App, ComposeResult
+from textual.screen import Screen
 from textual.containers import Container, Horizontal, VerticalScroll, Vertical
-from textual.widgets import Header, Static, DataTable, Label, SelectionList, Footer
+from textual.widgets import Header, Static, DataTable, Label, SelectionList, Footer, Input
 from textual.message import Message
 
 from monster_brawl.tui_resources import SourceTable, DeckTable
 from monster_brawl.config import CARD_PATHS
 from monster_brawl.db import deckbuild_to_db
+
+
+class BSOD(Screen):
+    BINDINGS = [("escape", "app.pop_screen", "Pop screen")]
+
+    def compose(self) -> ComposeResult:
+        yield Static(" Windows ", id="title")
+        yield Input(placeholder="Path to deck .db file")
+        yield Static("Press any key to continue [blink]_[/]", id="any-key")
 
 
 class DeckbuilderApp(App):
@@ -21,6 +31,7 @@ class DeckbuilderApp(App):
 
     BINDINGS = [
         ("e", "export_deck()", "Export Deck"),
+        ("l", "push_screen('load')", "Load Deck")
     ]
 
     def compose(self) -> ComposeResult:
@@ -30,6 +41,7 @@ class DeckbuilderApp(App):
         self.mdeck_table = DeckTable("Monster Deck", CARD_PATHS["db_pth"], "monsters")
         self.gdeck_table = DeckTable("Gear Deck", CARD_PATHS["db_pth"], "gear")
         self.sdeck_table = DeckTable("Spells Deck", CARD_PATHS["db_pth"], "spells")
+        self.install_screen(BSOD(), name='load')
         yield Header()
         yield Footer()
         with Container(id="app-grid"):
@@ -41,6 +53,11 @@ class DeckbuilderApp(App):
                 yield self.monster_table
                 yield self.gear_table
                 yield self.spell_table
+
+    def action_load_deck(self,):
+        """Load a deck from provided path."""
+        ...
+        
 
     def action_export_deck(self,):
         """

@@ -347,6 +347,7 @@ dependencies = [
     { name = "openpyxl" },
     { name = "pandas" },
     { name = "pillow" },
+    { name = "rich" },
     { name = "textual" },
     { name = "textualize" },
 ]
@@ -359,6 +360,7 @@ requires-dist = [
     { name = "openpyxl", specifier = ">=3.1.5" },
     { name = "pandas", specifier = ">=2.3.3" },
     { name = "pillow", specifier = ">=12.1.0" },
+    { name = "rich", specifier = ">=14.2.0" },
     { name = "textual", specifier = ">=7.3.0" },
     { name = "textualize", specifier = ">=0.1" },
 ]
