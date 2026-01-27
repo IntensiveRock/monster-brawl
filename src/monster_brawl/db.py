@@ -65,6 +65,7 @@ def grab_cards_from_db(db_pth : Path, table_name : str) -> list:
     """
     # First, select the rows where simnum=simnum
     # Second, reconstruct objects from params BLOB, need to unpickle that stuff
+    assert Path(db_pth).exists(), "This path doesn't exist."
     conn = sqlite3.connect(db_pth)
     cur = conn.cursor()
     res = cur.execute(f"SELECT * FROM {table_name}")

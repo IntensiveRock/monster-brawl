@@ -1,9 +1,10 @@
 from rich.text import Text
 
+from textual.screen import Screen
 from textual import events
 from textual.app import App, ComposeResult
 from textual.containers import Vertical
-from textual.widgets import DataTable, Label
+from textual.widgets import DataTable, Label, Static, Input, DirectoryTree
 from textual.message import Message
 
 from monster_brawl.db import grab_cards_from_db
@@ -95,6 +96,10 @@ class DeckTable( Vertical ):
         row_tup = row.data_table.get_row(row.row_key)
         self.dt.add_row(*row_tup)
 
+    def load(self, db_pth, table_name):
+        self.cards, _ = grab_cards_from_db(db_pth, table_name)
+        self.dt.add_rows(self.cards)
+
     def remove_row(self, row) -> DataTable:
         self.dt.remove_row(row.row_key)
 
@@ -102,3 +107,21 @@ class DeckTable( Vertical ):
         yield Label( self._title )
         # yield self._test_dt()
         yield self.dt
+
+
+class DeckLoad(Screen):
+    BINDINGS = [("escape", "app.pop_screen", "Pop screen")]
+
+    class PathSubmitted(Message):
+        """Sent when the table is selected"""
+        def __init__(self, path_str):
+            super().__init__()
+            self.path_str = path_str
+
+    def compose(self) -> ComposeResult:
+        yield Static(" Select deck database file ", id="title")
+        yield DirectoryTree("./")
+
+    def on_directory_tree_file_selected(self, fs :DirectoryTree.FileSelected):
+        fs.stop()
+        self.post_message(self.PathSubmitted(fs.path))
