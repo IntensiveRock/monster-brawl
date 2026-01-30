@@ -42,23 +42,21 @@ class MonsterCard(Card):
         """
         Draw the monster card.
         """
-        template = Image.open(CARD_PATHS["monster_template_path"])
+        template_pth = Path(CARD_PATHS[f"template_pth"]) / Path(f"{self.mtype}-{self.rank}.png")
+        template = Image.open(template_pth)
         if self.pic != None:
             ...
-        font = ImageFont.truetype(CARD_PATHS["font_path"], size=25)
+        numfont = ImageFont.truetype(CARD_PATHS["font_path"], size=70)
+        namefont = ImageFont.truetype(CARD_PATHS["font_path"], size=30)
+        descfont = ImageFont.truetype(CARD_PATHS["font_path"], size=25)
         draw = ImageDraw.Draw(template)
-        #Name
-        draw.text((80, 550), self.name, font=font, fill='black')
+        draw.text((105, 290), massage_desc(self.name, 15), font=namefont, fill='black')
         # Desc
-        draw.multiline_text((80, 650), massage_desc(self.desc, 45), font=font, fill='black')
-        # Rank
-        draw.text((80, 470), self.rank[0], font=font, fill='black')
+        draw.multiline_text((40, 40), massage_desc(self.desc, 23), font=descfont, fill='black')
         # HP
-        draw.text((250, 960), str(int(self.hp)), font=font, fill='black')
+        draw.text((40, 290), str(int(self.hp)), font=numfont, fill='green')
         # ATK
-        draw.text((650, 960), str(int(self.atk)), font=font, fill='black')
-        # Type
-        draw.circle((660, 90), 30, fill=self.mtype)
+        draw.text((40, 380), str(int(self.atk)), font=numfont, fill='red')
         return template
 
         
@@ -86,21 +84,20 @@ class GearCard(Card):
         self.pic = pic
 
     def draw(self,):
-        template = Image.open(CARD_PATHS["gear_template_path"])
+        template_pth = Path(CARD_PATHS[f"template_pth"]) / Path(f"gear.png")
+        template = Image.open(template_pth)
         if self.pic != None:
             ...
-        font = ImageFont.truetype(CARD_PATHS["font_path"], size=25)
+        numfont = ImageFont.truetype(CARD_PATHS["font_path"], size=70)
+        namefont = ImageFont.truetype(CARD_PATHS["font_path"], size=30)
+        descfont = ImageFont.truetype(CARD_PATHS["font_path"], size=25)
         draw = ImageDraw.Draw(template)
         #Name
-        draw.text((80, 550), self.name, font=font, fill='black')
+        draw.text((130, 290), massage_desc(self.name, 15), font=namefont, fill='black')
+        #draw_underlined_text(draw, (50, 150), mon.name, font=namefont, fill='black')
         # Desc
-        draw.multiline_text((80, 650), massage_desc(self.desc, 45), font=font, fill='black')
-        # Rank
-        draw.text((80, 470), self.rank[0], font=font, fill='black')
-        # HP
-        #draw.text((250, 960), str(int(mon.hp)), font=font, fill='black')
-        # ATK
-        draw.text((650, 960), str(int(self.cost)), font=font, fill='black')
+        draw.multiline_text((40, 40), massage_desc(self.desc, 20), font=descfont, fill='black')
+        draw.text((50,310), str(int(self.cost)), font=numfont, fill='black')
         return template
 
 
@@ -121,29 +118,55 @@ class SpellCard(Card):
         self.pic = pic
 
     def draw(self,):
-        template = Image.open(CARD_PATHS["spell_template_path"])
+        template_pth = Path(CARD_PATHS[f"template_pth"]) / Path(f"spell.png")
+        template = Image.open(template_pth)
         if self.pic != None:
             ...
-        font = ImageFont.truetype(CARD_PATHS["font_path"], size=25)
+        numfont = ImageFont.truetype(CARD_PATHS["font_path"], size=70)
+        namefont = ImageFont.truetype(CARD_PATHS["font_path"], size=30)
+        descfont = ImageFont.truetype(CARD_PATHS["font_path"], size=25)
         draw = ImageDraw.Draw(template)
-        draw.text((80, 550), self.name, font=font, fill='black')
-        draw.multiline_text((80, 650), massage_desc(self.desc, 45), font=font, fill='black')
-        draw.text((650, 960), str(int(self.cost)), font=font, fill='black')
+        #Name
+        draw.text((130, 290), massage_desc(self.name, 15), font=namefont, fill='black')
+        #draw_underlined_text(draw, (50, 150), mon.name, font=namefont, fill='black')
+        # Desc
+        draw.multiline_text((40, 40), massage_desc(self.desc, 20), font=descfont, fill='black')
+        draw.text((50,310), str(int(self.cost)), font=numfont, fill='black')
         return template
         
 
-
 def massage_desc(desc, char_len):
-    if len(desc) == 0:
-        return ""
-    else:
-        new_text = ""
-        i = 0
-        for char in desc:
-            if i >= char_len:
-                new_text += "\n"+char
+    new_text = ""
+    i = 0
+    recent_white_space = 0
+    for j, char in enumerate(desc):
+        if i >= char_len:
+            if char == " ":
+                new_text += " \n"
                 i = 0
             else:
-                new_text += char
-                i += 1
-        return new_text
+                before = new_text[:recent_white_space]
+                after = new_text[recent_white_space+1:]
+                new_text = before + "\n" + after + char
+                i = len(after) + 1
+        else:
+            if char == " ":
+                recent_white_space = j
+            new_text += char
+            i += 1
+    return new_text
+
+# def massage_desc(desc, char_len):
+#     if len(desc) == 0:
+#         return ""
+#     else:
+#         new_text = ""
+#         i = 0
+#         for char in desc:
+#             if i >= char_len:
+#                 new_text += "\n"+char
+#                 i = 0
+#             else:
+#                 new_text += char
+#                 i += 1
+#         return new_text
