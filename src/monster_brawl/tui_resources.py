@@ -110,7 +110,7 @@ class DeckTable( Vertical ):
 
     def add_row(self, row) -> DataTable:
         row_tup = row.data_table.get_row(row.row_key)
-        self.dt.add_row(*row_tup)
+        self.dt.add_row(*row_tup, label=str(self.dt.row_count + 1))
 
     def load(self, db_pth, table_name):
         self.cards, _ = grab_cards_from_db(db_pth, table_name)

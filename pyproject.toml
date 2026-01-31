@@ -23,6 +23,7 @@ dependencies = [
 monster-brawl = "monster_brawl:main"
 deck-pic = "monster_brawl.createdeckimages:db_to_images"
 deck-builder = "monster_brawl.deckbuilder:main"
+init-db = "monster_brawl.initializedb:main"
 
 [build-system]
 requires = ["hatchling"]
