@@ -88,9 +88,9 @@ class GearCard(Card):
         template = Image.open(template_pth)
         if self.pic != None:
             ...
-        numfont = ImageFont.truetype("/usr/share/fonts/TTF/GohuFont14NerdFont-Regular.ttf", size=70)
-        namefont = ImageFont.truetype("/usr/share/fonts/TTF/GohuFont14NerdFont-Regular.ttf", size=30)
-        descfont = ImageFont.truetype("/usr/share/fonts/TTF/GohuFont14NerdFont-Regular.ttf", size=22)
+        numfont = ImageFont.truetype(CARD_PATHS["font_path"], size=70)
+        namefont = ImageFont.truetype(CARD_PATHS["font_path"], size=30)
+        descfont = ImageFont.truetype(CARD_PATHS["font_path"], size=22)
 
         draw = ImageDraw.Draw(template)
         #Name
