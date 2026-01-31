@@ -88,16 +88,18 @@ class GearCard(Card):
         template = Image.open(template_pth)
         if self.pic != None:
             ...
-        numfont = ImageFont.truetype(CARD_PATHS["font_path"], size=70)
-        namefont = ImageFont.truetype(CARD_PATHS["font_path"], size=30)
-        descfont = ImageFont.truetype(CARD_PATHS["font_path"], size=25)
+        numfont = ImageFont.truetype("/usr/share/fonts/TTF/GohuFont14NerdFont-Regular.ttf", size=70)
+        namefont = ImageFont.truetype("/usr/share/fonts/TTF/GohuFont14NerdFont-Regular.ttf", size=30)
+        descfont = ImageFont.truetype("/usr/share/fonts/TTF/GohuFont14NerdFont-Regular.ttf", size=22)
+
         draw = ImageDraw.Draw(template)
         #Name
-        draw.text((130, 290), massage_desc(self.name, 15), font=namefont, fill='black')
+        draw.text((40, 40), self.name, font=namefont, fill='black')
         #draw_underlined_text(draw, (50, 150), mon.name, font=namefont, fill='black')
         # Desc
-        draw.multiline_text((40, 40), massage_desc(self.desc, 20), font=descfont, fill='black')
-        draw.text((50,310), str(int(self.cost)), font=numfont, fill='black')
+        draw.multiline_text((85, 290), massage_desc(self.desc, 18), font=descfont, fill='black')
+        draw.text((185,450), str(int(self.cost)), font=numfont, fill='black')
+
         return template
 
 
@@ -140,7 +142,7 @@ def massage_desc(desc, char_len):
     i = 0
     recent_white_space = 0
     for j, char in enumerate(desc):
-        if i >= char_len:
+        if i > char_len:
             if char == " ":
                 new_text += " \n"
                 i = 0
