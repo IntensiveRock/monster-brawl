@@ -19,8 +19,7 @@ def main(filepth):
     spell_file = pd.read_excel(filepth, sheet_name="spells", header=0, index_col=None)
     _logger.info("Loading monsters...")
     monster_list = []
-    for index, row in monster_file.iterrows():
-        
+    for index, row in monster_file.iterrows():        
         try:
             tmp_monster = MonsterCard(
                 name=row['Name'],
@@ -37,6 +36,8 @@ def main(filepth):
     _logger.info("Loading gear...")
     gear_list = []
     for index, row in gear_file.iterrows():
+        if type(row['Name']) == float :
+            break
         try:
             tmp_monster = GearCard(
                 name=row['Name'],

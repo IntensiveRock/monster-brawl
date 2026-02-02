@@ -29,8 +29,11 @@ class DeckbuilderApp(App):
 
     def compose(self) -> ComposeResult:
         self.monster_table = SourceTable("Monsters", CARD_PATHS["db_pth"], "monsters")
+        self.monster_table.dt.sort("mtype", "rank", "name")
         self.gear_table = SourceTable("Gear", CARD_PATHS["db_pth"], "gear")
+        self.gear_table.dt.sort("cost", "gtype", "name")
         self.spell_table = SourceTable("Spells", CARD_PATHS["db_pth"], "spells")
+        self.spell_table.dt.sort("cost", "name")
         self.mdeck_table = DeckTable("Monster Deck", CARD_PATHS["db_pth"], "monsters")
         self.gdeck_table = DeckTable("Gear Deck", CARD_PATHS["db_pth"], "gear")
         self.sdeck_table = DeckTable("Spells Deck", CARD_PATHS["db_pth"], "spells")

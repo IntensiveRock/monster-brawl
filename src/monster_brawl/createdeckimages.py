@@ -23,7 +23,7 @@ def db_to_images(name, deckpath):
                 name=row[0],
                 desc=row[5],
                 mtype=row[1],
-                rank=row[2],
+                rank=int(row[2]),
                 hp=row[3],
                 atk=row[4],)
             img = tmp_monster.draw()

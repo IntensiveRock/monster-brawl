@@ -32,24 +32,23 @@ class SourceTable( Vertical ):
         dt = DataTable()
         dt.zebra_stripes = True
         dt.cursor_type   = "row"
-        # dt.name = table_name
-        # dt.fixed_columns = 1
+        dt.show_row_labels = True
         if self.popd:
             for i, col in enumerate(self.cols):
                 if col == "name":
-                    dt.add_column(col, width=20)
+                    dt.add_column(col, key=col, width=20)
                 elif col == "desc":
-                    dt.add_column(col, width=100)
+                    dt.add_column(col, key=col, width=100)
                 elif col == "rank":
-                    dt.add_column(col, width=5)
-                elif col == "mtype":
-                    dt.add_column(col, width=6)
+                    dt.add_column(col, key=col, width=5)
+                elif col == "mtype" or col == "gtype":
+                    dt.add_column(col, key=col, width=6)
                 elif col == "hp" or col == "atk":
-                    dt.add_column(col, width=3)
+                    dt.add_column(col, key=col, width=3)
                 elif col == "cost":
-                    dt.add_column(col, width=4)
+                    dt.add_column(col, key=col, width=4)
                 else:
-                    dt.add_column(col, width=10)
+                    dt.add_column(col, key=col, width=10)
             dt.add_rows(self.cards)
         return dt
 
