@@ -29,6 +29,7 @@ class MonsterCard(Card):
             hp : int,
             atk : int,
             pic : Path = None,
+            speed : int = None,
     ):
         self.name = name
         self.desc = desc
@@ -37,6 +38,7 @@ class MonsterCard(Card):
         self.hp = hp
         self.atk = atk
         self.pic = pic
+        self.speed = speed
 
     def draw(self,):
         """
@@ -44,18 +46,17 @@ class MonsterCard(Card):
         """
         template_pth = Path(CARD_PATHS[f"template_pth"]) / Path(f"{self.mtype}-{self.rank}.png")
         template = Image.open(template_pth)
-        if self.pic != None:
-            ...
         numfont = ImageFont.truetype(CARD_PATHS["font_path"], size=70)
         namefont = ImageFont.truetype(CARD_PATHS["font_path"], size=30)
         descfont = ImageFont.truetype(CARD_PATHS["font_path"], size=25)
         draw = ImageDraw.Draw(template)
+        if self.pic != None:
+            ...
+        if self.speed != None:
+            draw.text((200, 380), str(int(self.speed)), font=numfont, fill='yellow')
         draw.text((105, 290), massage_desc(self.name, 15), font=namefont, fill='black')
-        # Desc
         draw.multiline_text((40, 40), massage_desc(self.desc, 23), font=descfont, fill='black')
-        # HP
         draw.text((40, 290), str(int(self.hp)), font=numfont, fill='green')
-        # ATK
         draw.text((40, 380), str(int(self.atk)), font=numfont, fill='red')
         return template
 
@@ -93,13 +94,9 @@ class GearCard(Card):
         descfont = ImageFont.truetype(CARD_PATHS["font_path"], size=22)
 
         draw = ImageDraw.Draw(template)
-        #Name
         draw.text((40, 40), self.name, font=namefont, fill='black')
-        #draw_underlined_text(draw, (50, 150), mon.name, font=namefont, fill='black')
-        # Desc
         draw.multiline_text((85, 290), massage_desc(self.desc, 18), font=descfont, fill='black')
         draw.text((185,450), str(int(self.cost)), font=numfont, fill='black')
-
         return template
 
 
@@ -128,10 +125,7 @@ class SpellCard(Card):
         namefont = ImageFont.truetype(CARD_PATHS["font_path"], size=30)
         descfont = ImageFont.truetype(CARD_PATHS["font_path"], size=25)
         draw = ImageDraw.Draw(template)
-        #Name
         draw.text((130, 290), massage_desc(self.name, 15), font=namefont, fill='black')
-        #draw_underlined_text(draw, (50, 150), mon.name, font=namefont, fill='black')
-        # Desc
         draw.multiline_text((40, 40), massage_desc(self.desc, 20), font=descfont, fill='black')
         draw.text((50,310), str(int(self.cost)), font=numfont, fill='black')
         return template

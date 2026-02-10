@@ -11,10 +11,11 @@ from monster_brawl.card import Card
 def save_monster_db(card_list : list[Card], name : str, pth : Path):
     conn = sqlite3.connect(pth / "Cards.db")
     cur = conn.cursor()
-    cur.execute("CREATE TABLE monsters(name, mtype, rank, hp int, atk int, desc, pic)")
+    cur.execute("CREATE TABLE monsters(name, mtype, rank, hp int, atk int, desc, pic, speed int)")
     for i, card in enumerate(card_list):
-        param_tuple = (card.name, card.mtype, card.rank, card.hp, card.atk, card.desc, card.pic)
-        cur.execute("INSERT INTO monsters VALUES(?, ?, ?, ?, ?, ?, ?)", param_tuple)
+        param_tuple = (card.name, card.mtype, card.rank, card.hp, card.atk, card.desc, card.pic, card.speed)
+        print(param_tuple)
+        cur.execute("INSERT INTO monsters VALUES(?, ?, ?, ?, ?, ?, ?, ?)", param_tuple)
     conn.commit()
     conn.close()
 
@@ -43,10 +44,10 @@ def deckbuild_to_db(card_dict):
     rand_num = "".join([str(random.randint(0,10)) for _ in range(5)])
     conn = sqlite3.connect(f"new_deck_{rand_num}.db")
     cur = conn.cursor()
-    cur.execute("CREATE TABLE monsters(name, mtype, rank, hp int, atk int, desc, pic)")
+    cur.execute("CREATE TABLE monsters(name, mtype, rank, hp int, atk int, desc, pic, speed int)")
     for i, card in enumerate(card_dict["monsters"]):
         # param_tuple = (card.name, card.desc, card.mtype, card.rank, card.hp, card.atk, card.pic)
-        cur.execute("INSERT INTO monsters VALUES(?, ?, ?, ?, ?, ?, ?)", card)
+        cur.execute("INSERT INTO monsters VALUES(?, ?, ?, ?, ?, ?, ?, ?)", card)
     cur.execute("CREATE TABLE gear(name, gtype, rank, cost int, desc, pic)")
     for i, card in enumerate(card_dict["gear"]):
         # param_tuple = (card.name, card.desc, card.gtype, card.rank, card.cost, card.pic)

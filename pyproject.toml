@@ -24,6 +24,7 @@ monster-brawl = "monster_brawl:main"
 deck-pic = "monster_brawl.createdeckimages:db_to_images"
 deck-builder = "monster_brawl.deckbuilder:main"
 init-db = "monster_brawl.initializedb:main"
+ex-lua = "monster_brawl.db_to_lua_table:main"
 
 [build-system]
 requires = ["hatchling"]

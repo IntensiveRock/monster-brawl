@@ -2,6 +2,7 @@ import pandas as pd
 import click
 from pathlib import Path
 import logging
+import math
 
 from monster_brawl.card import MonsterCard, GearCard, SpellCard
 from monster_brawl.db import save_monster_db, save_gear_db, save_spell_db
@@ -21,15 +22,17 @@ def main(filepth):
     monster_list = []
     for index, row in monster_file.iterrows():        
         try:
-            tmp_monster = MonsterCard(
-                name=row['Name'],
-                desc=row['Description'],
-                mtype=row['Monster Type'],
-                rank=row['Monster Rank'],
-                hp=row['HP'],
-                atk=row['ATK'],)
-            monster_list.append(tmp_monster)
-        
+            if not math.isnan(row['Monster Rank']):
+                tmp_monster = MonsterCard(
+                    name=row['Name'],
+                    desc=row['Description'],
+                    mtype=row['Monster Type'],
+                    rank=row['Monster Rank'],
+                    hp=row['HP'],
+                    atk=row['ATK'],
+                    speed=row['speed']
+                )
+                monster_list.append(tmp_monster)
         except:
             pass
     save_monster_db(monster_list, Path("monsters"), Path("."))
