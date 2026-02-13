@@ -37,7 +37,10 @@ def db_to_images(name, rows, cols, deckpath):
                 mtype=row[1],
                 rank=int(row[2]),
                 hp=row[3],
-                atk=row[4],)
+                atk=row[4],
+                pic=row[6],
+                speed=row[7],
+            )
             img = tmp_monster.draw()
             monster_list.append(row)
             card_list.append(img)
