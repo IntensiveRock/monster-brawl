@@ -58,6 +58,7 @@ class MonsterCard(Card):
         draw.multiline_text((40, 40), massage_desc(self.desc, 23), font=descfont, fill='black')
         draw.text((40, 290), str(int(self.hp)), font=numfont, fill='green')
         draw.text((40, 380), str(int(self.atk)), font=numfont, fill='red')
+        draw.text((200, 380), str(int(self.speed)), font=numfont, fill='yellow')
         return template
 
         

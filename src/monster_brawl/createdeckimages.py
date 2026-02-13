@@ -79,10 +79,10 @@ def db_to_images(name, rows, cols, deckpath):
 
 def image_grid(imgs, rows, cols):
     w, h = imgs[0].size
-    grid = Image.new('RGB', size=(cols*w, rows*h))
+    grid = Image.new('RGBA', (cols*w, rows*h), (255, 0, 0, 0))
     grid_w, grid_h = grid.size
     for i, img in enumerate(imgs):
-        grid.paste(img, box=(i%cols*w, i//cols*h))
+        grid.paste(img, (i%cols*w, i//cols*h), img)
     return grid
 
 
