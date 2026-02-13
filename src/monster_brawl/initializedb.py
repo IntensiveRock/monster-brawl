@@ -27,10 +27,10 @@ def main(filepth):
                     name=row['Name'],
                     desc=row['Description'],
                     mtype=row['Monster Type'],
-                    rank=row['Monster Rank'],
+                    rank=int(row['Monster Rank']),
                     hp=row['HP'],
                     atk=row['ATK'],
-                    speed=row['speed']
+                    speed=row['Speed']
                 )
                 monster_list.append(tmp_monster)
         except:

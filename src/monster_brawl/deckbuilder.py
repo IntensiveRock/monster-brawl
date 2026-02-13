@@ -88,7 +88,7 @@ class DeckbuilderApp(App):
     def on_source_table_row_selected(self, event : SourceTable.RowSelected):
         row = event.row
         row_tup = row.data_table.get_row(row.row_key)
-        if len(row_tup) == 7:
+        if len(row_tup) > 6:
             self.mdeck_table.add_row(row)
         elif len(row_tup) == 6:
             self.gdeck_table.add_row(row)
