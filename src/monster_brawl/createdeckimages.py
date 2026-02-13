@@ -70,13 +70,13 @@ def db_to_images(name, rows, cols, deckpath):
             card_list.append(img)
         except:
             pass
-    lua_list = ["[\n"]
-    lua_list += make_lua_file(tbl="monsters", cards=monster_list, cols=mcols)
-    lua_list += make_lua_file(tbl="gear", cards=gear_list, cols=gcols)
-    lua_list += make_lua_file(tbl="spells", cards=spells_list, cols=scols) + ["]\n"]
-    with open("cardlist.fnl", "w") as f:
-        for line in lua_list:
-            f.write(line)
+    # lua_list = ["[\n"]
+    # lua_list += make_lua_file(tbl="monsters", cards=monster_list, cols=mcols)
+    # lua_list += make_lua_file(tbl="gear", cards=gear_list, cols=gcols)
+    # lua_list += make_lua_file(tbl="spells", cards=spells_list, cols=scols) + ["]\n"]
+    # with open("cardlist.fnl", "w") as f:
+    #     for line in lua_list:
+    #         f.write(line)
     deck_grid = image_grid(card_list, rows, cols)
     deck_grid.save(f"{name}.png")
 
