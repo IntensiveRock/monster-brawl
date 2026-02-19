@@ -30,22 +30,19 @@ def db_to_images(name, rows, cols, deckpath):
     spells_list = []
     card_list = []
     for index, row in enumerate(monsters):
-        try:
-            tmp_monster = MonsterCard(
-                name=row[0],
-                desc=row[5],
-                mtype=row[1],
-                rank=int(row[2]),
-                hp=row[3],
-                atk=row[4],
-                pic=row[6],
-                speed=row[7],
-            )
-            img = tmp_monster.draw()
-            monster_list.append(row)
-            card_list.append(img)
-        except:
-            pass
+        tmp_monster = MonsterCard(
+            name=row[0],
+            desc=row[5],
+            mtype=row[1],
+            rank=int(row[2]),
+            hp=row[3],
+            atk=row[4],
+            pic=row[6],
+            speed=row[7],
+        )
+        img = tmp_monster.draw()
+        monster_list.append(row)
+        card_list.append(img)
     for index, row in enumerate(gear):
         try:
             tmp_monster = GearCard(

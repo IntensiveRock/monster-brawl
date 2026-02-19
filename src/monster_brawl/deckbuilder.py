@@ -100,7 +100,7 @@ class DeckbuilderApp(App):
     def on_deck_table_row_selected(self, event : DeckTable.RowSelected):
         row = event.row
         row_tup = row.data_table.get_row(row.row_key)
-        if len(row_tup) == 7:
+        if len(row_tup) >= 7:
             self.mdeck_table.remove_row(row)
         elif len(row_tup) == 6:
             self.gdeck_table.remove_row(row)
