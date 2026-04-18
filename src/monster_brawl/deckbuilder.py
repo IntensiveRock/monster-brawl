@@ -33,7 +33,7 @@ class DeckbuilderApp(App):
         self.gear_table = SourceTable("Gear", CARD_PATHS["db_pth"], "gear")
         self.gear_table.dt.sort("cost", "gtype", "name")
         self.spell_table = SourceTable("Spells", CARD_PATHS["db_pth"], "spells")
-        self.spell_table.dt.sort("cost", "name")
+        # self.spell_table.dt.sort("cost", "name")
         self.mdeck_table = DeckTable("Monster Deck", CARD_PATHS["db_pth"], "monsters")
         self.gdeck_table = DeckTable("Gear Deck", CARD_PATHS["db_pth"], "gear")
         self.sdeck_table = DeckTable("Spells Deck", CARD_PATHS["db_pth"], "spells")
@@ -88,9 +88,9 @@ class DeckbuilderApp(App):
     def on_source_table_row_selected(self, event : SourceTable.RowSelected):
         row = event.row
         row_tup = row.data_table.get_row(row.row_key)
-        if len(row_tup) > 6:
+        if len(row_tup) == 8:
             self.mdeck_table.add_row(row)
-        elif len(row_tup) == 6:
+        elif len(row_tup) == 11:
             self.gdeck_table.add_row(row)
         elif len(row_tup) == 4:
             self.sdeck_table.add_row(row)
@@ -100,9 +100,9 @@ class DeckbuilderApp(App):
     def on_deck_table_row_selected(self, event : DeckTable.RowSelected):
         row = event.row
         row_tup = row.data_table.get_row(row.row_key)
-        if len(row_tup) >= 7:
+        if len(row_tup) == 8:
             self.mdeck_table.remove_row(row)
-        elif len(row_tup) == 6:
+        elif len(row_tup) == 11:
             self.gdeck_table.remove_row(row)
         elif len(row_tup) == 4:
             self.sdeck_table.remove_row(row)

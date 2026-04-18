@@ -4,7 +4,7 @@ import numpy as np
 from rich.console import Console
 from rich.table import Table
 
-max_cards = 40
+max_cards = 50
 
 # composition_dict = {
 #     "Red" : {
@@ -21,9 +21,9 @@ max_cards = 40
 
 composition_dict = {
     "Red" : {
-        "LVL1" : 12,
-        "LVL2" : 9,
-        "LVL3" : 9,
+        "LVL1" : 14,
+        "LVL2" : 12,
+        "LVL3" : 12,
     },
 }
 

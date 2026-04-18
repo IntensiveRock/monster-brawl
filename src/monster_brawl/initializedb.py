@@ -47,7 +47,9 @@ def main(filepth):
                 desc=row['Description'],
                 gtype=row['Gear Type'],
                 rank=row['Gear Rank'],
-                cost=row['Cost'])
+                cost=row['Cost'],
+                buffs={"ATK Buff" : row["ATK Buff"], "HP Buff" : row["HP Buff"], "Shield Buff" : row["Shield Buff"], "Armor Buff" : row["Armor Buff"], "Reach Buff" : row["Reach Buff"]}
+            )
             gear_list.append(tmp_monster)
         except:
             pass
