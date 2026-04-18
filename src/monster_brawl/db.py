@@ -23,13 +23,14 @@ def save_monster_db(card_list : list[Card], name : str, pth : Path):
 def save_gear_db(card_list : list[Card], name : str, pth : Path):
     conn = sqlite3.connect(pth / "Cards.db")
     cur = conn.cursor()
-    cur.execute("CREATE TABLE gear(name, gtype, rank, cost int, desc, pic)")
+    cur.execute("CREATE TABLE gear(name, gtype, rank, cost int, desc, pic, atk_buff, hp_buff, shield_buff, armor_buff, reach_buff)")
     for i, card in enumerate(card_list):
-        param_tuple = (card.name, card.gtype, card.rank, card.cost, card.desc, card.pic)
-        cur.execute("INSERT INTO gear VALUES(?, ?, ?, ?, ?, ?)", param_tuple)
+        param_tuple = (card.name, card.gtype, card.rank, card.cost, card.desc, card.pic, card.atk_buff, card.hp_buff, card.shield_buff, card.armor_buff, card.reach_buff)
+        cur.execute("INSERT INTO gear VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", param_tuple)
     conn.commit()
     conn.close()
 
+    
 def save_spell_db(card_list : list[Card], name : str, pth : Path):
     conn = sqlite3.connect(pth / "Cards.db")
     cur = conn.cursor()
@@ -48,10 +49,10 @@ def deckbuild_to_db(card_dict):
     for i, card in enumerate(card_dict["monsters"]):
         # param_tuple = (card.name, card.desc, card.mtype, card.rank, card.hp, card.atk, card.pic)
         cur.execute("INSERT INTO monsters VALUES(?, ?, ?, ?, ?, ?, ?, ?)", card)
-    cur.execute("CREATE TABLE gear(name, gtype, rank, cost int, desc, pic)")
+    cur.execute("CREATE TABLE gear(name, gtype, rank, cost int, desc, pic, atk_buff, hp_buff, shield_buff, armor_buff, reach_buff)")
     for i, card in enumerate(card_dict["gear"]):
         # param_tuple = (card.name, card.desc, card.gtype, card.rank, card.cost, card.pic)
-        cur.execute("INSERT INTO gear VALUES(?, ?, ?, ?, ?, ?)", card)
+        cur.execute("INSERT INTO gear VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", card)
     cur.execute("CREATE TABLE spells(name, cost int, desc, pic)")
     for i, card in enumerate(card_dict["spells"]):
         # param_tuple = (card.name, card.desc, card.cost, card.pic)
