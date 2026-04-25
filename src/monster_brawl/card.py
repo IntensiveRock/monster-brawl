@@ -44,7 +44,6 @@ class MonsterCard(Card):
         """
         Draw the monster card.
         """
-        # template_pth = Path(CARD_PATHS[f"template_pth"]) / Path(f"{self.mtype}-{self.rank}.png")
         rank_dict = {1 : "d2", 2 : "d6", 3 : "d10"}
         round_pth = CARD_PATHS['template_pth']
         temp_outline_pth = round_pth / Path(f"{self.mtype}.png")
@@ -58,11 +57,10 @@ class MonsterCard(Card):
         numfont = ImageFont.truetype(CARD_PATHS["font_path"], size=80)
         namefont = ImageFont.truetype(CARD_PATHS["font_path"], size=40)
         descfont = ImageFont.truetype(CARD_PATHS["font_path"], size=40)
+
+        draw = ImageDraw.Draw(template)
         
-        # draw = ImageDraw.Draw(template)
-        # numfont = ImageFont.truetype("/usr/share/fonts/TTF/GohuFont14NerdFont-Regular.ttf", size=100)
-        # namefont = ImageFont.truetype("/usr/share/fonts/TTF/GohuFont14NerdFont-Regular.ttf", size=40)
-        # descfont = ImageFont.truetype("/usr/share/fonts/TTF/GohuFont14NerdFont-Regular.ttf", size=40)
+        # Name        
         name_font_size = 40
         max_name_length = 450
         name_text = ImageText.Text(self.name, namefont)
@@ -73,21 +71,13 @@ class MonsterCard(Card):
             namefont = ImageFont.truetype(CARD_PATHS["font_path"], size=name_font_size)
             name_text = ImageText.Text(self.name, namefont)
             name_text.stroke(1.2)
-            name_length = name_text.get_length()
-            
-        
-        draw = ImageDraw.Draw(template)
-        
-        
-        #template.paste(seedling, (0,0), seedling)
-        #Name
-        # draw.text((90, 45), self.name, font=namefont, fill='white', stroke_width=1)
+            name_length = name_text.get_length()                    
         name_loc = (60, 550)
         if self.mtype == 'black':
-            draw.text(name_loc, name_text, fill='white')
+            draw.text(name_loc, name_text, fill=self.mtype)
         else:
-            draw.text(name_loc, name_text, fill='black')
-        #draw_underlined_text(draw, (50, 150), mon.name, font=namefont, fill='black')
+            draw.text(name_loc, name_text, fill=self.mtype)
+            
         # Desc
         base_max_text = 18
         desc_font_size = 40
@@ -110,27 +100,11 @@ class MonsterCard(Card):
             height = bottom - top
             
         draw.text((80,650), desc_text, fill='white')
-        # draw.multiline_text((40,610), massage_desc(self.desc, 18), font=descfont, fill='black')
-        
-        # Rank
-        #draw.text((80, 470), mon.rank[0], font=font, fill='black')
         # HP
         draw.text((600, 760), str(int(self.hp)), font=numfont, fill='green')
         # ATK
         draw.text((600, 610), str(int(self.atk)), font=numfont, fill='red')
-        # if self.pic != None:
-        #     ...
-        # if self.speed != None:
-        #     draw.text((200, 380), str(int(self.speed)), font=numfont, fill='yellow')
-        # draw.text((105, 290), massage_desc(self.name, 15), font=namefont, fill='black')
-        # draw.multiline_text((40, 40), massage_desc(self.desc, 23), font=descfont, fill='black')
-        # draw.text((40, 290), str(int(self.hp)), font=numfont, fill='green')
-        # draw.text((40, 380), str(int(self.atk)), font=numfont, fill='red')
-        # draw.text((200, 380), str(int(self.speed)), font=numfont, fill='yellow')
-        return template
-
-        
-        
+        return template                
 
 
 class GearCard(Card):
@@ -164,34 +138,19 @@ class GearCard(Card):
 
     def draw(self,):
         # template_pth = Path(CARD_PATHS[f"template_pth"]) / Path(f"gear.png")
-        stock_pth = Path("/home/dewdrop/Projects/ccb/round/gear-stock.png")
-        template_pth = Path("/home/dewdrop/Projects/ccb/roundgear.png")
-        template = Image.open(stock_pth)
-        outline = Image.open(template_pth)
-        template.paste(outline, (0,0), outline)
+        template_pth = Path(CARD_PATHS['template_pth']) / Path("gear.png")
+        template = Image.open(template_pth)
         numfont = ImageFont.truetype(CARD_PATHS["font_path"], size=70)
         modfont = ImageFont.truetype(CARD_PATHS["font_path"], size=100)
         namefont = ImageFont.truetype(CARD_PATHS["font_path"], size=45)
-        descfont = ImageFont.truetype(CARD_PATHS["font_path"], size=30)
+        descfont = ImageFont.truetype(CARD_PATHS["font_path"], size=40)
 
         draw = ImageDraw.Draw(template)
-        draw.text((40, 55), self.name, font=namefont, fill='black')
-        draw.multiline_text((40, 500), massage_desc(self.desc, 18), font=descfont, fill='black')
-        draw.text((525,42), str(int(self.cost)), font=numfont, fill='black')
-        atk_rot = rotate_text("+1", numfont, 270)
-        template.paste(ImageOps.colorize(atk_rot, (0,0,0), (255,255,84)), (475,750),  atk_rot)
-        # draw.text((525, 700), atk_text, fill='black')
-        
-        # if self.pic != None:
-        #     ...
-        # numfont = ImageFont.truetype(CARD_PATHS["font_path"], size=70)
-        # namefont = ImageFont.truetype(CARD_PATHS["font_path"], size=30)
-        # descfont = ImageFont.truetype(CARD_PATHS["font_path"], size=22)
-
-        # draw = ImageDraw.Draw(template)
-        # draw.text((40, 40), self.name, font=namefont, fill='black')
-        # draw.multiline_text((85, 290), massage_desc(self.desc, 18), font=descfont, fill='black')
-        # draw.text((185,450), str(int(self.cost)), font=numfont, fill='black')
+        draw.text((80, 550), self.name, font=namefont, fill='black')
+        draw.multiline_text((120, 620), massage_desc(self.desc, 18), font=descfont, fill='white')
+        draw.text((625,850), str(int(self.cost)), font=numfont, fill='white')
+        # atk_rot = rotate_text("+1", numfont, 270)
+        # template.paste(ImageOps.colorize(atk_rot, (0,0,0), (255,255,84)), (475,750),  atk_rot)
         return template
 
 
@@ -212,21 +171,19 @@ class SpellCard(Card):
         self.pic = pic
 
     def draw(self,):
-        # template_pth = Path(CARD_PATHS[f"template_pth"]) / Path(f"spell.png")
-        stock_pth = Path("/home/dewdrop/Projects/ccb/round/spell-stock.png")
-        template_pth = Path("/home/dewdrop/Projects/ccb/roundspell.png")
-        template = Image.open(stock_pth)
-        outline = Image.open(template_pth)
-        template.paste(outline, (0,0), outline)
+        template_pth = Path(CARD_PATHS[f"template_pth"]) / Path(f"spell.png")
+        # stock_pth = Path("/home/dewdrop/Projects/ccb/round/spell-stock.png")
+        # template_pth = Path("/home/dewdrop/Projects/ccb/roundspell.png")
+        template = Image.open(template_pth)
         numfont = ImageFont.truetype(CARD_PATHS["font_path"], size=70)
         modfont = ImageFont.truetype(CARD_PATHS["font_path"], size=100)
         namefont = ImageFont.truetype(CARD_PATHS["font_path"], size=45)
-        descfont = ImageFont.truetype(CARD_PATHS["font_path"], size=30)
+        descfont = ImageFont.truetype(CARD_PATHS["font_path"], size=40)
 
         draw = ImageDraw.Draw(template)
-        draw.text((40, 55), self.name, font=namefont, fill='black')
-        draw.multiline_text((40,610), massage_desc(self.desc, 18), font=descfont, fill='black')
-        draw.text((525,42), str(int(self.cost)), font=numfont, fill='black')
+        draw.text((80, 550), self.name, font=namefont, fill='black')
+        draw.multiline_text((120,620), massage_desc(self.desc, 18), font=descfont, fill='white')
+        draw.text((625,850), str(int(self.cost)), font=numfont, fill='white')
         # if self.pic != None:
         #     ...
         # numfont = ImageFont.truetype(CARD_PATHS["font_path"], size=70)
