@@ -45,23 +45,15 @@ class MonsterCard(Card):
         Draw the monster card.
         """
         # template_pth = Path(CARD_PATHS[f"template_pth"]) / Path(f"{self.mtype}-{self.rank}.png")
-        round_pth = Path("/home/dewdrop/Projects/ccb/round/")
-        temp_outline_pth = round_pth / Path(f"round-outline.png")
-        temp_stock_pth = round_pth / Path("round-stockimage.png")
-        temp_type_pth = round_pth / Path(f"round-{self.mtype}.png")
-        temp_level_pth = round_pth / Path(f"round-{self.rank}.png")
-        temp_speed_pth = round_pth / Path(f"speed-{self.speed}.png")
+        rank_dict = {1 : "d2", 2 : "d6", 3 : "d10"}
+        round_pth = CARD_PATHS['template_pth']
+        temp_outline_pth = round_pth / Path(f"{self.mtype}.png")
+        temp_level_pth = round_pth / Path(f"{rank_dict[int(self.rank)]}.png")
 
-        template = Image.open(temp_stock_pth)
-        outline = Image.open(temp_outline_pth)
-        mtype = Image.open(temp_type_pth)
+        template = Image.open(temp_outline_pth)
         level = Image.open(temp_level_pth)
-        speed = Image.open(temp_speed_pth)
 
-        template.paste(outline, (0,0), outline)
-        template.paste(mtype, (0,0), mtype)
         template.paste(level, (0,0), level)
-        template.paste(speed, (0,0), speed)        
 
         numfont = ImageFont.truetype(CARD_PATHS["font_path"], size=80)
         namefont = ImageFont.truetype(CARD_PATHS["font_path"], size=40)
@@ -90,7 +82,11 @@ class MonsterCard(Card):
         #template.paste(seedling, (0,0), seedling)
         #Name
         # draw.text((90, 45), self.name, font=namefont, fill='white', stroke_width=1)
-        draw.text((90, 45), name_text, fill='black')
+        name_loc = (60, 550)
+        if self.mtype == 'black':
+            draw.text(name_loc, name_text, fill='white')
+        else:
+            draw.text(name_loc, name_text, fill='black')
         #draw_underlined_text(draw, (50, 150), mon.name, font=namefont, fill='black')
         # Desc
         base_max_text = 18
@@ -113,15 +109,15 @@ class MonsterCard(Card):
             width = right - left
             height = bottom - top
             
-        draw.text((40,610), desc_text, fill='black')
+        draw.text((80,650), desc_text, fill='white')
         # draw.multiline_text((40,610), massage_desc(self.desc, 18), font=descfont, fill='black')
         
         # Rank
         #draw.text((80, 470), mon.rank[0], font=font, fill='black')
         # HP
-        draw.text((530, 760), str(int(self.hp)), font=numfont, fill='green')
+        draw.text((600, 760), str(int(self.hp)), font=numfont, fill='green')
         # ATK
-        draw.text((530, 610), str(int(self.atk)), font=numfont, fill='red')
+        draw.text((600, 610), str(int(self.atk)), font=numfont, fill='red')
         # if self.pic != None:
         #     ...
         # if self.speed != None:

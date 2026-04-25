@@ -44,18 +44,25 @@ def db_to_images(name, rows, cols, deckpath):
         monster_list.append(row)
         card_list.append(img)
     for index, row in enumerate(gear):
-        try:
-            tmp_monster = GearCard(
-                name=row[0],
-                desc=row[4],
-                gtype=row[1],
-                rank=row[2],
-                cost=row[3])
-            img = tmp_monster.draw()
-            gear_list.append(row)
-            card_list.append(img)
-        except:
-            pass
+        # try:
+        buffs = {"ATK Buff" : row[6],
+                 "HP Buff" : row[7],
+                 "Shield Buff" : row[8],
+                 "Armor Buff" : row[9],
+                 "Reach Buff" : row[10],}
+        tmp_monster = GearCard(
+            name=row[0],
+            desc=row[4],
+            gtype=row[1],
+            rank=row[2],
+            cost=row[3],
+            buffs=buffs
+        )
+        img = tmp_monster.draw()
+        gear_list.append(row)
+        card_list.append(img)
+        # except:
+        #     pass
     for index, row in enumerate(spells):
         try:
             tmp_monster = SpellCard(
